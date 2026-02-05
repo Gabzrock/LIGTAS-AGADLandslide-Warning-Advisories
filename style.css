@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+body {
+    margin: 0; padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    background-image: url('dark_textured_background.jpg'); 
+    background-color: #0c1a26; 
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    background-size: cover; 
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+}
+
+.main-wrapper {
+    transform: scale(0.65); 
+    transform-origin: top center;
+    width: 1200px;
+}
+
+/* --- Control Bar --- */
+.control-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: -5px; 
+    padding: 0 10px;
+    z-index: 10;
+    position: relative;
+}
+
+.region-nav { display: flex; gap: 5px; }
+
+.nav-btn {
+    background: #11263a; color: #8da2b5;
+    border: 1px solid #334a66; border-bottom: none;
+    padding: 15px 30px; font-size: 18px; font-weight: bold;
+    cursor: pointer; border-radius: 10px 10px 0 0;
+    transition: all 0.2s;
+}
+.nav-btn:hover { background: #1a3a5a; color: white; }
+.nav-btn.active {
+    background: #fdd835; color: #0c1a26;
+    border-color: #fdd835; padding-bottom: 25px; margin-bottom: -5px;
+}
+
+.download-btn {
+    background: #28a745; color: white;
+    border: 1px solid #1e7e34; padding: 10px 20px;
+    font-size: 16px; font-weight: bold; border-radius: 5px;
+    cursor: pointer; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+    transition: background 0.3s;
+}
+.download-btn:hover { background: #218838; }
+
+/* --- Main Card --- */
+#advisory-container {
+    background-image: url('https://raw.githubusercontent.com/Gabzrock/GE_experiments/refs/heads/main/advisorybg.png');
+    background-color: #0c1a26; color: white;
+    padding: 30px; border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    border-top: 5px solid #fdd835;
+}
+
+header { text-align: center; margin-bottom: 25px; }
+h1 { margin: 0; font-size: 2.8em; text-transform: uppercase; letter-spacing: 1px; }
+h2 { margin: 5px 0 20px 0; font-size: 1.6em; color: #a0aec0; }
+.highlight { color: #fdd835; }
+
+.info-bar { display: flex; justify-content: center; align-items: center; gap: 20px; }
+#rainfall-date { font-size: 1.2em; margin: 0; }
+#threshold {
+    background-color: #c93d3d; padding: 10px 20px;
+    border-radius: 5px; font-weight: bold; font-size: 1.2em;
+}
+
+#dashboard-content { display: flex; gap: 20px; height: 600px; }
+#table-panel { flex: 2; display: flex; flex-direction: column; }
+
+.table-scroll-container {
+    flex-grow: 1; overflow-y: auto;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px; border: 1px solid #334a66;
+}
+
+table { width: 100%; border-collapse: collapse; }
+
+/* --- UPDATED TABLE STYLES --- */
+th {
+    background: #1a3a5a; 
+    color: #fdd835; 
+    padding: 10px; /* Reduced padding */
+    text-align: left; 
+    position: sticky; 
+    top: 0; 
+    z-index: 5; 
+    font-size: 0.9em; /* Smaller font size */
+}
+
+td { 
+    padding: 8px 10px; /* Reduced padding */
+    border-bottom: 1px solid #334a66; 
+    font-size: 0.9em; /* Smaller font size */
+    color: #e2e8f0; 
+}
+
+#table-footer-label { margin-top: 10px; font-style: italic; color: #a0aec0; text-align: center; }
+
+#map-panel {
+    flex: 3; position: relative;
+    border-radius: 8px; overflow: hidden;
+    border: 1px solid #334a66;
+}
+#advisory-map { height: 100%; width: 100%; }
+
+#error-message {
+    position: absolute; bottom: 20px; right: 20px;
+    background: rgba(255, 0, 0, 0.8); color: white;
+    padding: 10px 20px; border-radius: 5px;
+    display: none; z-index: 1000;
+}
+
+footer { margin-top: 25px; }
+#static-footer-image { width: 100%; height: auto; border-radius: 0 0 8px 8px; opacity: 0.9; }
+
+.aws-label {
+    background: transparent !important; border: none !important;
+    color: white !important; font-weight: bold; font-size: 14px;
+    text-shadow: 2px 2px 2px #000;
+}
