@@ -63,6 +63,39 @@ body {
     padding: 30px; border-radius: 15px;
     box-shadow: 0 15px 40px rgba(0,0,0,0.6);
     border-top: 5px solid #fdd835;
+    position: relative; /* Needed for loading overlay positioning */
+}
+
+/* --- LOADING EFFECT STYLES --- */
+.loading-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(12, 26, 38, 0.9); /* Dark semi-transparent background */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    border-radius: 15px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #fdd835;
+    backdrop-filter: blur(3px); /* Optional: Blur effect */
+}
+
+.spinner {
+    border: 8px solid rgba(255, 255, 255, 0.1);
+    border-top: 8px solid #fdd835; /* Gold spinner */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 header { text-align: center; margin-bottom: 25px; }
@@ -88,23 +121,25 @@ h2 { margin: 5px 0 20px 0; font-size: 1.6em; color: #a0aec0; }
 
 table { width: 100%; border-collapse: collapse; }
 
-/* --- UPDATED TABLE STYLES --- */
 th {
     background: #1a3a5a; 
     color: #fdd835; 
-    padding: 10px; /* Reduced padding */
+    padding: 10px; 
     text-align: left; 
     position: sticky; 
     top: 0; 
     z-index: 5; 
-    font-size: 0.9em; /* Smaller font size */
+    font-size: 0.9em; 
 }
 
 td { 
-    padding: 8px 10px; /* Reduced padding */
+    padding: 8px 10px; 
     border-bottom: 1px solid #334a66; 
-    font-size: 0.9em; /* Smaller font size */
+    font-size: 16px; 
     color: #e2e8f0; 
+}
+table, th, td {
+  border: 1px solid white;
 }
 
 #table-footer-label { margin-top: 10px; font-style: italic; color: #a0aec0; text-align: center; }
@@ -128,6 +163,6 @@ footer { margin-top: 25px; }
 
 .aws-label {
     background: transparent !important; border: none !important;
-    color: white !important; font-weight: bold; font-size: 14px;
+    color: white !important; font-weight: bold; font-size: 17px;
     text-shadow: 2px 2px 2px #000;
 }
