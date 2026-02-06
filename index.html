@@ -1,16 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
-    <meta charset="UTF-8">
-    <title>Realtime-Landslide Warning Advisories</title>
-    <link rel="stylesheet" href="./style.css">
-
-  </head>
-    
-  <body>
-  <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,24 +11,25 @@
 <body>
 
     <div class="main-wrapper">
-        
         <div class="control-bar">
             <nav class="region-nav">
                 <button id="btn-benguet" class="nav-btn active" onclick="switchRegion('benguet')">Benguet</button>
                 <button id="btn-calabarzon" class="nav-btn" onclick="switchRegion('calabarzon')">CALABARZON</button>
                 <button id="btn-northern-samar" class="nav-btn" onclick="switchRegion('northern-samar')">Northern Samar</button>
             </nav>
-            
-            <button class="download-btn" onclick="downloadAdvisory()">
-                ⬇ Download Advisory
-            </button>
+            <button class="download-btn" onclick="downloadAdvisory()">⬇ Download Image</button>
         </div>
 
         <div id="advisory-container">
+            
+            <div id="loading-overlay" class="loading-overlay">
+                <div class="spinner"></div>
+                <p>Fetching Advisory Data...</p>
+            </div>
+
             <header>
                 <h1 id="region-title">Landslide Warning Advisory</h1>
                 <h2>7-Day Rainfall Accumulation (mm)</h2>
-                
                 <div class="info-bar">
                     <p id="rainfall-date">Loading Date...</p>
                     <div id="threshold">Rainfall-Landslide Threshold: <span id="threshold-value">--</span></div>
@@ -58,8 +48,7 @@
                                     <th>Warning</th>
                                 </tr>
                             </thead>
-                            <tbody id="table-body">
-                                </tbody>
+                            <tbody id="table-body"></tbody>
                         </table>
                     </div>
                     <div id="table-footer-label">Computed threshold info</div>
@@ -82,9 +71,4 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script src="script.js"></script>
 </body>
-</html>
-    <script  src="./script.js"></script>
-
-  </body>
-  
 </html>
