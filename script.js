@@ -22,6 +22,9 @@ const CONFIG = {
 let map;
 
 function switchRegion(regionId) {
+    // Show Loading Overlay
+    document.getElementById('loading-overlay').style.display = 'flex';
+
     const config = CONFIG[regionId];
     
     // Update Text Elements
@@ -50,9 +53,13 @@ function fetchData(url) {
             } else {
                 handleError("No data found.");
             }
+            // Hide Loading Overlay when done
+            document.getElementById('loading-overlay').style.display = 'none';
         },
         error: function() {
             handleError("Connection Error");
+            // Hide Loading Overlay even on error
+            document.getElementById('loading-overlay').style.display = 'none';
         }
     });
 }
@@ -62,9 +69,7 @@ function updateTable(data) {
     tbody.innerHTML = '';
     data.forEach(row => {
         const tr = document.createElement('tr');
-        // Get color for the table text as well
         const color = getWarningColor(row.Warning);
-        
         tr.innerHTML = `
             <td>${row.AWS_Name}</td>
             <td>${row.Municipality}</td>
@@ -77,68 +82,53 @@ function updateTable(data) {
 
 function updateMap(data) {
     if (map) map.remove();
-    
-    // Initialize Map
     map = L.map('advisory-map').setView([12.8797, 121.7740], 6);
 
-    // Satellite Layer
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: 'Tiles &copy; Esri',
         crossOrigin: 'anonymous'
     }).addTo(map);
 
     const bounds = [];
-    
     data.forEach(item => {
         if (item.Lat && item.Lng) {
             const coords = [parseFloat(item.Lat), parseFloat(item.Lng)];
             const warningVal = String(item.Warning).trim();
 
-            // --- 1. Determine Warning Color ---
-            let circleColor = '#4ade80'; // Default Green (0)
+            let circleColor = 'white'; 
             let opacity = 0.3;
 
-            if (warningVal === '1') {
-                circleColor = '#facc15'; // Yellow
-            } else if (warningVal === '2') {
-                circleColor = '#fd7e14'; // Orange
-            } else if (warningVal === '3') {
-                circleColor = '#dc2626'; // Red
-            } else if (warningVal === 'N/A' || warningVal === '') {
-                opacity = 0; // Hide circle if N/A
-            }
+            if (warningVal === '1') circleColor = '#facc15'; 
+            else if (warningVal === '2') circleColor = '#fd7e14'; 
+            else if (warningVal === '3') circleColor = '#dc2626'; 
+            else if (warningVal === 'N/A' || warningVal === '') opacity = 0.1; 
 
-            // --- 2. Draw Buffer Circle (If not N/A) ---
             if (opacity > 0) {
                 const circle = L.circle(coords, {
                     radius: 20000,
                     color: circleColor,
                     fillColor: circleColor,
                     fillOpacity: opacity,
-                    weight: 2
+                    weight: 2,
+                    dashArray: '5, 5' // 5-pixel dash, 5-pixel gap
+
                 }).addTo(map);
 
-                // Add Label
                 circle.bindTooltip(item.AWS_Name, { 
-                    permanent: true, 
-                    direction: 'center', 
-                    className: 'aws-label' 
+                    permanent: true, direction: 'center', className: 'aws-label' 
                 });
             }
 
-            // --- 3. Restore Marker Logos (Icons) ---
             if (item.Icon_URL) {
                 const customIcon = L.icon({
                     iconUrl: item.Icon_URL,
-                    iconSize: [40, 40],     // Adjusted size for visibility
-                    iconAnchor: [20, 40],   // Center bottom anchor
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 40],
                     popupAnchor: [0, -40],
                     className: 'station-icon' 
                 });
-                
                 L.marker(coords, { icon: customIcon }).addTo(map);
             }
-
             bounds.push(coords);
         }
     });
@@ -148,37 +138,40 @@ function updateMap(data) {
 
 function getWarningColor(val) {
     val = String(val).trim();
-    if (val === '1') return '#facc15'; // Yellow
-    if (val === '2') return '#fd7e14'; // Orange
-    if (val === '3') return '#dc2626'; // Red
-    if (val === 'N/A') return '#ffffff'; // White text for N/A
-    return '#4ade80'; // Green (0)
+    if (val === '1') return '#facc15'; 
+    if (val === '2') return '#fd7e14'; 
+    if (val === '3') return '#dc2626'; 
+    if (val === 'N/A') return '#ffffff'; 
+    return '#4ade80'; 
 }
 
 function handleError(msg) {
     const errDiv = document.getElementById('error-message');
-    if(errDiv) {
-        errDiv.innerText = msg;
-        errDiv.style.display = 'block';
-    }
+    if(errDiv) { errDiv.innerText = msg; errDiv.style.display = 'block'; }
 }
 
-// Function to Download the Advisory as an Image
 function downloadAdvisory() {
     const node = document.getElementById('advisory-container');
     
+    // Temporarily hide the loading overlay before screenshot if it happens to be stuck
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const originalDisplay = loadingOverlay.style.display;
+    loadingOverlay.style.display = 'none';
+
     domtoimage.toPng(node)
         .then(function (dataUrl) {
             const link = document.createElement('a');
             link.download = 'landslide-advisory.png';
             link.href = dataUrl;
             link.click();
+            // Restore display
+            loadingOverlay.style.display = originalDisplay;
         })
         .catch(function (error) {
             console.error('Error generating image', error);
             alert("Could not generate image. Check console for details.");
+            loadingOverlay.style.display = originalDisplay;
         });
 }
 
-// Initial Load
 window.onload = () => switchRegion('benguet');
