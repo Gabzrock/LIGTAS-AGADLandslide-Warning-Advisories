@@ -114,9 +114,9 @@ function updateMap(data) {
 
                 }).addTo(map);
 
-                circle.bindTooltip(item.AWS_Name, { 
-                    permanent: true, direction: 'center', className: 'aws-label' 
-                });
+                //circle.bindTooltip(item.AWS_Name, { 
+                    //permanent: true, direction: 'center', className: 'aws-label' 
+                //});
             }
 
             if (item.Icon_URL) {
@@ -138,9 +138,9 @@ function updateMap(data) {
 
 function getWarningColor(val) {
     val = String(val).trim();
-    if (val === '1') return '#facc15'; 
-    if (val === '2') return '#fd7e14'; 
-    if (val === '3') return '#dc2626'; 
+    if (val === '1') return 'yellow'; 
+    if (val === '2') return 'orange'; 
+    if (val === '3') return 'red'; 
     if (val === 'N/A') return '#ffffff'; 
     return '#4ade80'; 
 }
