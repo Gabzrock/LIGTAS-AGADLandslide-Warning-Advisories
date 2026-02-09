@@ -16,6 +16,12 @@ const CONFIG = {
         title: 'Northern Samar <span class="highlight">Landslide Warning Advisory</span>',
         threshold: '27 mm**',
         footer: '**Rainfall Landslide Threshold for Bicol Region applied in Northern Samar'
+    },
+    'Bicol-Region': {
+        url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSosfBP3StMyRUzwI0tUZPsLjPVH1zePCz8gZbTMOzjOvnonbmNCoy5VT46UxO0qdqb-Wm9EqTpXp8y/pub?gid=2049973263&single=true&output=csv',
+        title: 'Bicol-Region <span class="highlight">Landslide Warning Advisory</span>',
+        threshold: '27 mm**',
+        footer: '**Rainfall Landslide Threshold for Bicol Region applied in Northern Samar'
     }
 };
 
