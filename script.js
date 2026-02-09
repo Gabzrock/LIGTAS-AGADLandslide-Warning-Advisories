@@ -98,9 +98,9 @@ function updateMap(data) {
             let circleColor = 'white'; 
             let opacity = 0.3;
 
-            if (warningVal === '1') circleColor = '#facc15'; 
-            else if (warningVal === '2') circleColor = '#fd7e14'; 
-            else if (warningVal === '3') circleColor = '#dc2626'; 
+            if (warningVal === '1') circleColor = 'yellow'; 
+            else if (warningVal === '2') circleColor = 'orange'; 
+            else if (warningVal === '3') circleColor = 'red'; 
             else if (warningVal === 'N/A' || warningVal === '') opacity = 0.1; 
 
             if (opacity > 0) {
